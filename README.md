@@ -37,11 +37,14 @@
 
 ## 실행 화면 (과제3)
 - 코드의 실행 스크린샷과 구현 내용 설명
-![실행화면](img/screenshot-3.png)
+
+![실행화면](img/3.png)
+![실행화면](img/4.png)
+
 - 구현한 내용 (위 그림 참조)
-- UI 구성 : Label(앱 이름 표시), TextBox 2개(아이디, 패스워드) 
-- Placeholder 표시 : 아이디와 패스워드 입력 힌트를 입력창 안에 회색으로 표시
-- 로그인 버튼 : 아이디와 패스워드가 모두 맞아야 로그인 허용
+  - 이미지 저장 기능 구현 : SaveFileDialog를 이용해서 파일 저장 대화상자를 열고 사용자가 선택한 경로에 이미지를 저장하는 기능 구현
+  - 3가지 포맷 저장 : 저장 시 확장자에 따라 ImageFormat.Png로 PNG 파일을, ImageFormat.Jpeg로 JPG 파일을, ImageFormat.Bmp로 BMP 파일을 저장할 수 있도록 구현
+  - 저장 버튼 이벤트 : btnSaveFile의 Click 이벤트에서 SaveFileDialog를 호출하여 canvasBitmap.Save()로 그려진 그림을 파일로 저장하도록 구현
 
 ## 실행 화면 (과제4)
 - 코드의 실행 스크린샷과 구현 내용 설명
