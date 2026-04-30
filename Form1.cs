@@ -41,6 +41,7 @@ namespace SimplePaint
             btnLine.Click += btnLine_Click;
             btnRectangle.Click += btnRectangle_Click;
             btnCircle.Click += btnCircle_Click;
+            btnSaveFile.Click += btnSaveFile_Click;
             // 색상 콤보박스 이벤트 연결
             cmbColor.SelectedIndexChanged += cmbColor_SelectedIndexChanged;
             cmbColor.SelectedIndex = 1; 
@@ -153,6 +154,24 @@ namespace SimplePaint
         {
             currentLineWidth = trbLineWidth.Value;
         }
+        private void btnSaveFile_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Filter = "PNG 파일|*.png|JPG 파일|*.jpg|BMP 파일|*.bmp";
+            saveDialog.Title = "이미지 저장";
 
+            if (saveDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filename = saveDialog.FileName;
+                string ext = System.IO.Path.GetExtension(filename).ToLower();
+
+                if (ext == ".png")
+                    canvasBitmap.Save(filename, ImageFormat.Png);
+                else if (ext == ".jpg")
+                    canvasBitmap.Save(filename, ImageFormat.Jpeg);
+                else if (ext == ".bmp")
+                    canvasBitmap.Save(filename, ImageFormat.Bmp);
+            }
+        }
     }
 }
