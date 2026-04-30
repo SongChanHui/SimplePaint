@@ -48,7 +48,14 @@
 
 ## 실행 화면 (과제4)
 - 코드의 실행 스크린샷과 구현 내용 설명
-![실행화면](img/screenshot-4.png)
+
+![실행화면](img/5.png)
+![실행화면](img/6.png)
+
+
 - 구현한 내용 (위 그림 참조)
-- 패스워드 입력 내용 숨기기 : UseSystemPasswordChar 속성 이용
-- Placeholder 메시지를 표시할 때는 UseSystemPasswordChar 없애기
+  - 외부 이미지 불러오기 : btnOpenFile의 Click 이벤트에서 OpenFileDialog를 이용해 PNG, JPG, BMP 파일을 불러와 캔버스로 사용할 수 있도록 구현
+  - 이미지 크기에 맞춰 캔버스 크기 조정 : 불러온 이미지의 Width, Height에 맞춰 Bitmap과 picCanvas 크기를 자동으로 조정하도록 구현
+  - 스크롤바 : Panel(pnlCanvas)의 AutoScroll 속성을 이용해 이미지 크기가 화면보다 클 경우 스크롤바가 자동으로 생성되도록 구현
+  - 마우스 휠 확대/축소 : MouseWheel 이벤트에서 zoomFactor 값을 조절하여 picCanvas의 크기를 변경하는 방식으로 확대/축소 기능을 구현
+  - 확대/축소 좌표 보정 : 마우스 좌표를 zoomFactor로 나눠서 확대/축소 상태에서도 정확한 위치에 도형이 그려지도록 구현
