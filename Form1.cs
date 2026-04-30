@@ -21,6 +21,7 @@ namespace SimplePaint
         private ToolType currentTool = ToolType.Line; // 현재 선택된 도형
         private Color currentColor = Color.Black; // 현재 색상
         private int currentLineWidth = 2; // 현재 선 두께
+        private float zoomFactor = 1.0f; // 확대/축소 배율
 
         public Form1()
         {
@@ -35,6 +36,7 @@ namespace SimplePaint
             picCanvas.MouseDown += PicCanvas_MouseDown;
             picCanvas.MouseMove += PicCanvas_MouseMove;
             picCanvas.MouseUp += PicCanvas_MouseUp;
+            picCanvas.MouseWheel += PicCanvas_MouseWheel;
             // picCanvas가 다시 그려질 때 PicCanvas_Paint 함수를 실행하도록 연결
             picCanvas.Paint += PicCanvas_Paint;
             // 도형 선택 버튼 이벤트 연결
@@ -42,6 +44,7 @@ namespace SimplePaint
             btnRectangle.Click += btnRectangle_Click;
             btnCircle.Click += btnCircle_Click;
             btnSaveFile.Click += btnSaveFile_Click;
+            btnOpenFile.Click += btnOpenFile_Click;
             // 색상 콤보박스 이벤트 연결
             cmbColor.SelectedIndexChanged += cmbColor_SelectedIndexChanged;
             cmbColor.SelectedIndex = 1; 
@@ -54,37 +57,40 @@ namespace SimplePaint
         }
         private void PicCanvas_MouseDown(object sender, MouseEventArgs e)
         {
-            isDrawing = true; // 드래그 시작
-            startPoint = e.Location; // 시작점 저장
+            isDrawing = true;
+            startPoint = new Point((int)(e.X / zoomFactor), (int)(e.Y / zoomFactor));
         }
+
         private void PicCanvas_MouseMove(object sender, MouseEventArgs e)
         {
-            if (!isDrawing) return; // 그림 그리기와 상관 없는 마우스 움직임은 무시
-            endPoint = e.Location; // 현재 위치 갱신
-                                   // picCanvas를 다시 그려라 (Paint 이벤트를 발생시킨다)
-            picCanvas.Invalidate(); // 화면 다시 그리기 (미리보기) 
+            if (!isDrawing) return;
+            endPoint = new Point((int)(e.X / zoomFactor), (int)(e.Y / zoomFactor));
+            picCanvas.Invalidate();
         }
 
         private void PicCanvas_MouseUp(object sender, MouseEventArgs e)
         {
-            if (!isDrawing) return; // 그림 그리기와 상관 없는 마우스 움직임은 무시
-            isDrawing = false; // 드래그 종료
-            endPoint = e.Location;
-            // 실제 비트맵에 도형 그리기 (확정)
+            if (!isDrawing) return;
+            isDrawing = false;
+            endPoint = new Point((int)(e.X / zoomFactor), (int)(e.Y / zoomFactor));
+
             using (Pen pen = new Pen(currentColor, currentLineWidth))
             {
                 DrawShape(canvasGraphics, pen, startPoint, endPoint);
             }
-            picCanvas.Invalidate(); // 다시 그려서 결과 반영, Paint 이벤트 발생
+            picCanvas.Invalidate();
         }
         private void PicCanvas_Paint(object sender, PaintEventArgs e)
         {
+            e.Graphics.DrawImage(canvasBitmap, 0, 0, picCanvas.Width, picCanvas.Height);
+
             if (!isDrawing) return;
-            // 점선 펜 (미리보기용)
             using (Pen previewPen = new Pen(currentColor, currentLineWidth))
             {
                 previewPen.DashStyle = DashStyle.Dash;
-                DrawShape(e.Graphics, previewPen, startPoint, endPoint);
+                Point scaledStart = new Point((int)(startPoint.X * zoomFactor), (int)(startPoint.Y * zoomFactor));
+                Point scaledEnd = new Point((int)(endPoint.X * zoomFactor), (int)(endPoint.Y * zoomFactor));
+                DrawShape(e.Graphics, previewPen, scaledStart, scaledEnd);
             }
         }
 
@@ -172,6 +178,42 @@ namespace SimplePaint
                 else if (ext == ".bmp")
                     canvasBitmap.Save(filename, ImageFormat.Bmp);
             }
+        }
+        private void btnOpenFile_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openDialog = new OpenFileDialog();
+            openDialog.Filter = "이미지 파일|*.png;*.jpg;*.bmp";
+            openDialog.Title = "이미지 열기";
+
+            if (openDialog.ShowDialog() == DialogResult.OK)
+            {
+                Bitmap loadedImage = new Bitmap(openDialog.FileName);
+
+                // 이미지 크기에 맞춰 캔버스 크기 조정
+                canvasBitmap = new Bitmap(loadedImage.Width, loadedImage.Height);
+                canvasGraphics = Graphics.FromImage(canvasBitmap);
+                canvasGraphics.DrawImage(loadedImage, 0, 0);
+
+                picCanvas.Width = loadedImage.Width;
+                picCanvas.Height = loadedImage.Height;
+                picCanvas.Image = canvasBitmap;
+                picCanvas.Invalidate();
+
+                loadedImage.Dispose();
+            }
+        }
+        private void PicCanvas_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (e.Delta > 0)
+                zoomFactor = Math.Min(zoomFactor + 0.1f, 5.0f); // 최대 5배
+            else
+                zoomFactor = Math.Max(zoomFactor - 0.1f, 0.1f); // 최소 0.1배
+
+            // 캔버스 크기를 배율에 맞게 조정
+            picCanvas.Width = (int)(canvasBitmap.Width * zoomFactor);
+            picCanvas.Height = (int)(canvasBitmap.Height * zoomFactor);
+
+            picCanvas.Invalidate();
         }
     }
 }

@@ -41,11 +41,13 @@
             trbLineWidth = new TrackBar();
             btnSaveFile = new Button();
             btnOpenFile = new Button();
+            pnlCanvas = new Panel();
             ((System.ComponentModel.ISupportInitialize)picCanvas).BeginInit();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)trbLineWidth).BeginInit();
+            pnlCanvas.SuspendLayout();
             SuspendLayout();
             // 
             // lblAppName
@@ -63,9 +65,9 @@
             // 
             picCanvas.BackColor = Color.White;
             picCanvas.BorderStyle = BorderStyle.FixedSingle;
-            picCanvas.Location = new Point(62, 350);
+            picCanvas.Location = new Point(3, 3);
             picCanvas.Name = "picCanvas";
-            picCanvas.Size = new Size(1450, 673);
+            picCanvas.Size = new Size(1444, 667);
             picCanvas.TabIndex = 1;
             picCanvas.TabStop = false;
             // 
@@ -178,17 +180,26 @@
             btnOpenFile.Text = "열기";
             btnOpenFile.UseVisualStyleBackColor = false;
             // 
+            // pnlCanvas
+            // 
+            pnlCanvas.AutoScroll = true;
+            pnlCanvas.Controls.Add(picCanvas);
+            pnlCanvas.Location = new Point(62, 350);
+            pnlCanvas.Name = "pnlCanvas";
+            pnlCanvas.Size = new Size(1450, 673);
+            pnlCanvas.TabIndex = 6;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(14F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1574, 1079);
+            Controls.Add(pnlCanvas);
             Controls.Add(btnOpenFile);
             Controls.Add(btnSaveFile);
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
-            Controls.Add(picCanvas);
             Controls.Add(lblAppName);
             Name = "Form1";
             Text = "Simple Paint v1.0";
@@ -198,6 +209,7 @@
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)trbLineWidth).EndInit();
+            pnlCanvas.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -216,5 +228,6 @@
         private Button btnRectangle;
         private ComboBox cmbColor;
         private TrackBar trbLineWidth;
+        private Panel pnlCanvas;
     }
 }
