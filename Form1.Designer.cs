@@ -159,7 +159,7 @@
             btnSaveFile.BackColor = Color.FromArgb(192, 255, 255);
             btnSaveFile.Font = new Font("맑은 고딕", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSaveFile.ImageAlign = ContentAlignment.TopCenter;
-            btnSaveFile.Location = new Point(1362, 185);
+            btnSaveFile.Location = new Point(1362, 195);
             btnSaveFile.Name = "btnSaveFile";
             btnSaveFile.Size = new Size(150, 125);
             btnSaveFile.TabIndex = 3;
@@ -171,7 +171,7 @@
             btnOpenFile.BackColor = Color.FromArgb(255, 255, 192);
             btnOpenFile.Font = new Font("맑은 고딕", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnOpenFile.ImageAlign = ContentAlignment.TopCenter;
-            btnOpenFile.Location = new Point(1178, 185);
+            btnOpenFile.Location = new Point(1178, 195);
             btnOpenFile.Name = "btnOpenFile";
             btnOpenFile.Size = new Size(150, 125);
             btnOpenFile.TabIndex = 5;
