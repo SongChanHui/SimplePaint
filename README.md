@@ -7,9 +7,13 @@
 - 사용한 컨트롤:
   - Label, GroupBox, Button, ComboBox, TrackBar, PictureBox
 - 사용한 기술과 구현한 기능:
-  - Visual Studio를 이용하여 UI 디자인
-  - string 클래스를 이용한 사용자 입력 데이터 처리
-  - DateTime 클래스를 이용한 현재시간 정보 구하기
+   - Visual Studio를 이용하여 UI 디자인
+   - Bitmap과 Graphics 객체를 이용하여 캔버스 위에 직선, 사각형, 원을 그리는 기능 구현
+   - MouseDown, MouseMove, MouseUp 이벤트를 이용하여 마우스 드래그로 도형을 그리는 기능 구현
+   - DashStyle.Dash 속성을 이용하여 드래그 중 점선으로 도형 미리보기를 표시하는 기능 구현
+   - ComboBox와 TrackBar를 이용하여 색상과 선 굵기를 선택하는 기능 구현
+   - OpenFileDialog와 SaveFileDialog를 이용하여 이미지 파일을 불러오고 PNG, JPG, BMP 포맷으로 저장하는 기능 구현
+   - MouseWheel 이벤트와 zoomFactor를 이용하여 마우스 휠로 캔버스를 확대/축소하는 기능 구현
 
 ## 실행 화면 (과제1)
 - 코드의 실행 스크린샷과 구현 내용 설명
